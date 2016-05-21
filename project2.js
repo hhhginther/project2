@@ -1,3 +1,6 @@
+//todo: refine assets, collect them into spritesheet; create gameplay; add sounds...
+//add instructions; add end screen; include menu (diff from title screen);
+
 var gameport = document.getElementById("gameport");
 
 var renderer = PIXI.autoDetectRenderer(200, 200, {backgroundColor: 0xe80831});
@@ -5,20 +8,36 @@ gameport.appendChild(renderer.view);
 
 var stage = new PIXI.Container();
 
-var startButton = new PIXI.Sprite(PIXI.Texture.fromImage("start.png"));
-startButton.position.set(50,50);
 
-startButton.interactive = true;
-startButton.on('mousedown', onButtonDown);
+var titlescreen = new PIXI.Sprite(PIXI.Texture.fromImage("titlescreen.png"));
+titlescreen.anchor.set(0.5);
+titlescreen.position.set(100,100);
 
-stage.addChild(startButton);
+titlescreen.interactive= true;
+titlescreen.on('mousedown', onButtonDown);
+stage.addChild(titlescreen);
 
 function onButtonDown(){
-  gameStart();
-  stage.removeChild(startButton);
-  //startButton.visible= false;
+  startScreen();
+  stage.removeChild(titlescreen);
 }
 
+function startScreen(){
+  var startButton = new PIXI.Sprite(PIXI.Texture.fromImage("start.png"));
+  startButton.position.set(50,50);
+
+  startButton.interactive = true;
+  startButton.on('mousedown', onButtonDown2);
+  stage.addChild(startButton);
+
+  //when startButton is pressed, calls function to draw assets and start play
+  function onButtonDown2(){
+    gameStart();
+    stage.removeChild(startButton);
+  }
+}
+
+//gameplay goes here..
 function gameStart() {
   var block = new PIXI.Sprite(PIXI.Texture.fromImage("block.png"));
 
